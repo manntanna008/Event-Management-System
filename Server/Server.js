@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 dotenv.config();
 
@@ -12,17 +12,10 @@ app.use(express.json());
 
 
 // =================================
-// EMAIL CONFIGURATION
+// RESEND EMAIL CONFIGURATION
 // =================================
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 
 // =================================
@@ -41,26 +34,49 @@ app.get("/", (req, res) => {
 app.get("/test-email", async (req, res) => {
   try {
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER,
+    const { data, error } = await resend.emails.send({
+      from: "Gateway Event Management <onboarding@resend.dev>",
+      to: [process.env.EMAIL_USER],
 
       subject: "Gateway Event Management - Test Email",
 
-      text: `
-Hello!
+      html: `
+        <div style="font-family: Arial; padding: 20px;">
+          <h2 style="color: #ff5a45;">
+            Gateway Event Management
+          </h2>
 
-This is a test email from Gateway Event Management System.
+          <h3>Test Email Successful 🎉</h3>
 
-Your email service is working successfully.
+          <p>
+            Your email service is working successfully.
+          </p>
 
-Thank you.
+          <p>
+            This email was sent using Resend API.
+          </p>
+
+          <hr>
+
+          <p>Thank you.</p>
+        </div>
       `,
     });
+
+    if (error) {
+      console.error("RESEND ERROR:", error);
+
+      return res.status(500).json({
+        success: false,
+        message: "Email sending failed.",
+        error: error.message,
+      });
+    }
 
     res.json({
       success: true,
       message: "Test email sent successfully!",
+      id: data?.id,
     });
 
   } catch (error) {
@@ -72,16 +88,18 @@ Thank you.
       message: "Email sending failed.",
       error: error.message,
     });
-
   }
 });
+
 
 // =================================
 // REGISTRATION ROUTE
 // =================================
 
 app.post("/api/register", async (req, res) => {
+
   try {
+
     const {
       eventId,
       eventTitle,
@@ -90,29 +108,58 @@ app.post("/api/register", async (req, res) => {
       phone,
     } = req.body;
 
-    if (!eventId || !eventTitle || !name || !email || !phone) {
+
+    // ===============================
+    // VALIDATION
+    // ===============================
+
+    if (
+      !eventId ||
+      !eventTitle ||
+      !name ||
+      !email ||
+      !phone
+    ) {
+
       return res.status(400).json({
         success: false,
         message: "All registration fields are required.",
       });
+
     }
 
-    // Send confirmation email
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
+
+    // ===============================
+    // SEND CONFIRMATION EMAIL
+    // ===============================
+
+    const { data, error } = await resend.emails.send({
+
+      from: "Gateway Event Management <onboarding@resend.dev>",
+
+      to: [email],
 
       subject: `Registration Confirmed - ${eventTitle}`,
 
       html: `
-        <div style="font-family: Arial; padding: 20px;">
+        <div
+          style="
+            font-family: Arial;
+            padding: 20px;
+            max-width: 600px;
+            margin: auto;
+          "
+        >
+
           <h2 style="color: #ff5a45;">
             Gateway Event Management
           </h2>
 
           <h3>Registration Confirmed 🎉</h3>
 
-          <p>Hello <strong>${name}</strong>,</p>
+          <p>
+            Hello <strong>${name}</strong>,
+          </p>
 
           <p>
             Your registration has been successfully confirmed.
@@ -120,44 +167,110 @@ app.post("/api/register", async (req, res) => {
 
           <hr>
 
-          <p><strong>Event:</strong> ${eventTitle}</p>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
+          <p>
+            <strong>Event:</strong> ${eventTitle}
+          </p>
+
+          <p>
+            <strong>Name:</strong> ${name}
+          </p>
+
+          <p>
+            <strong>Email:</strong> ${email}
+          </p>
+
+          <p>
+            <strong>Phone:</strong> ${phone}
+          </p>
 
           <hr>
 
           <p>
-            Thank you for registering with Gateway Event Management.
+            Thank you for registering with
+            Gateway Event Management.
           </p>
+
         </div>
       `,
     });
 
-    console.log("Registration successful:", {
-      eventId,
-      eventTitle,
-      name,
-      email,
-      phone,
-    });
+
+    // ===============================
+    // RESEND ERROR
+    // ===============================
+
+    if (error) {
+
+      console.error(
+        "RESEND REGISTRATION ERROR:",
+        error
+      );
+
+      return res.status(500).json({
+
+        success: false,
+
+        message:
+          "Registration email could not be sent.",
+
+        error: error.message,
+
+      });
+
+    }
+
+
+    // ===============================
+    // SUCCESS
+    // ===============================
+
+    console.log(
+      "Registration successful:",
+      {
+        eventId,
+        eventTitle,
+        name,
+        email,
+        phone,
+        emailId: data?.id,
+      }
+    );
+
 
     res.json({
+
       success: true,
-      message: "Registration successful! Confirmation email sent.",
+
+      message:
+        "Registration successful! Confirmation email sent.",
+
+      emailId: data?.id,
+
     });
+
 
   } catch (error) {
 
-    console.error("REGISTRATION ERROR:", error);
+    console.error(
+      "REGISTRATION ERROR:",
+      error
+    );
 
     res.status(500).json({
+
       success: false,
-      message: "Registration failed.",
+
+      message:
+        "Registration failed.",
+
       error: error.message,
+
     });
+
   }
+
 });
+
 
 // =================================
 // START SERVER
@@ -165,8 +278,10 @@ app.post("/api/register", async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
+
   console.log(
-    `Gateway backend running on http://localhost:${PORT}`
+    `Gateway backend running on port ${PORT}`
   );
+
 });
