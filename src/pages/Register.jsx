@@ -96,8 +96,8 @@ export default function Register() {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        'http://localhost:5000/api/register',
+     const response = await fetch(
+  'https://event-management-system-bs6b.onrender.com/api/register',
         {
           method: 'POST',
 
