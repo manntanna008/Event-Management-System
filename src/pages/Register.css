@@ -1,0 +1,715 @@
+/* =========================================
+   REGISTER PAGE
+========================================= */
+
+.register-page,
+.page-container {
+  min-height: 100vh;
+  padding: 45px 7%;
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.18), transparent 35%),
+    linear-gradient(135deg, #f8faff, #eef2ff);
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: #172554;
+}
+
+
+/* =========================================
+   LAYOUT
+========================================= */
+
+.registration-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+
+  align-items: start;
+}
+
+.registration-main {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+
+/* =========================================
+   EVENT SUMMARY
+========================================= */
+
+.event-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  padding: 25px;
+
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(15px);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 22px;
+
+  box-shadow:
+    0 15px 40px rgba(30, 41, 59, 0.08);
+}
+
+.event-summary-icon {
+  width: 62px;
+  height: 62px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: linear-gradient(
+    135deg,
+    #4f46e5,
+    #7c3aed
+  );
+
+  color: white;
+
+  box-shadow:
+    0 10px 25px rgba(79, 70, 229, 0.28);
+}
+
+.event-category,
+.form-kicker {
+  display: inline-block;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.4px;
+
+  color: #6366f1;
+}
+
+.event-summary-card h2 {
+  margin: 7px 0 12px;
+
+  font-size: 27px;
+  line-height: 1.2;
+
+  color: #172554;
+}
+
+.event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  color: #64748b;
+  font-size: 14px;
+}
+
+.event-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+/* =========================================
+   REGISTRATION CARD
+========================================= */
+
+.registration-card {
+  background: white;
+
+  padding: 35px;
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 20px 55px rgba(15, 23, 42, 0.09);
+
+  border: 1px solid #e8eaf0;
+}
+
+.registration-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+
+  border-bottom: 1px solid #edf0f5;
+}
+
+.registration-heading h1 {
+  margin: 7px 0 5px;
+
+  font-size: 32px;
+  color: #111827;
+}
+
+.registration-heading p {
+  margin: 0;
+
+  color: #64748b;
+}
+
+.heading-icon {
+  color: #4f46e5;
+
+  background: #eef2ff;
+  padding: 12px;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 15px;
+}
+
+
+/* =========================================
+   FORM
+========================================= */
+
+.registration-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-field label {
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #334155;
+}
+
+.input-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  height: 55px;
+
+  padding: 0 16px;
+
+  background: #f8fafc;
+
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+
+  transition: all 0.25s ease;
+}
+
+.input-box svg {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.input-box:focus-within {
+  background: white;
+
+  border-color: #6366f1;
+
+  box-shadow:
+    0 0 0 4px rgba(99, 102, 241, 0.10);
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.input-box input::placeholder {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.registration-error {
+  padding: 13px 15px;
+
+  border-radius: 12px;
+
+  background: #fff1f2;
+  border: 1px solid #fecdd3;
+
+  color: #be123c;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+/* =========================================
+   REGISTER BUTTON
+========================================= */
+
+.register-submit {
+  width: 100%;
+  height: 58px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border: none;
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f46e5,
+      #7c3aed
+    );
+
+  color: white;
+
+  font-size: 16px;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 12px 25px rgba(79, 70, 229, 0.28);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.register-submit:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 16px 30px rgba(79, 70, 229, 0.35);
+}
+
+.register-submit:active {
+  transform: translateY(0);
+}
+
+.register-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* =========================================
+   SECURITY NOTE
+========================================= */
+
+.secure-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  color: #64748b;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+.secure-note svg {
+  color: #16a34a;
+  flex-shrink: 0;
+}
+
+
+/* =========================================
+   RIGHT SIDEBAR
+========================================= */
+
+.registration-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  position: sticky;
+  top: 25px;
+}
+
+
+/* =========================================
+   PRICE CARD
+========================================= */
+
+.price-card {
+  padding: 28px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #111827,
+      #312e81
+    );
+
+  color: white;
+
+  box-shadow:
+    0 20px 40px rgba(15, 23, 42, 0.18);
+}
+
+.price-card span,
+.availability-card > span,
+.included-card > span {
+  display: block;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  opacity: 0.75;
+}
+
+.price-card strong {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 38px;
+}
+
+.price-card small {
+  opacity: 0.7;
+}
+
+
+/* =========================================
+   AVAILABILITY
+========================================= */
+
+.availability-card,
+.included-card {
+  padding: 25px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  border: 1px solid #e8eaf0;
+
+  box-shadow:
+    0 12px 30px rgba(15, 23, 42, 0.07);
+}
+
+.availability-card h3 {
+  margin: 9px 0 15px;
+
+  font-size: 22px;
+  color: #111827;
+}
+
+.availability-bar {
+  width: 100%;
+  height: 9px;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: #e2e8f0;
+}
+
+.availability-bar div {
+  height: 100%;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #4f46e5,
+      #8b5cf6
+    );
+
+  transition: width 0.4s ease;
+}
+
+.availability-card small {
+  display: block;
+
+  margin-top: 10px;
+
+  color: #64748b;
+}
+
+
+/* =========================================
+   INCLUDED
+========================================= */
+
+.included-card h3 {
+  margin: 10px 0 18px;
+
+  font-size: 18px;
+
+  color: #111827;
+}
+
+.included-card div {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 13px;
+
+  font-size: 14px;
+
+  color: #475569;
+}
+
+.included-card div svg {
+  color: #22c55e;
+}
+
+
+/* =========================================
+   SUCCESS PAGE
+========================================= */
+
+.success-card {
+  max-width: 620px;
+
+  margin: 80px auto;
+
+  padding: 50px 40px;
+
+  text-align: center;
+
+  background: white;
+
+  border-radius: 28px;
+
+  box-shadow:
+    0 25px 70px rgba(15, 23, 42, 0.12);
+
+  border: 1px solid #e8eaf0;
+}
+
+.success-icon {
+  width: 90px;
+  height: 90px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #dcfce7;
+
+  color: #16a34a;
+}
+
+.success-card h1 {
+  margin: 12px 0;
+
+  font-size: 34px;
+
+  color: #111827;
+}
+
+.success-card > p {
+  color: #64748b;
+
+  line-height: 1.6;
+}
+
+.success-card strong {
+  color: #111827;
+}
+
+.success-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin: 25px 0;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background: #f8fafc;
+}
+
+.success-details div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  color: #475569;
+
+  font-size: 14px;
+}
+
+.success-details svg {
+  color: #4f46e5;
+}
+
+.success-note {
+  font-size: 13px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.empty-state {
+  max-width: 500px;
+
+  margin: 100px auto;
+
+  padding: 40px;
+
+  text-align: center;
+
+  background: white;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.1);
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+
+.btn {
+  border: none;
+
+  padding: 13px 20px;
+
+  border-radius: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.btn-primary {
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #4f46e5,
+      #7c3aed
+    );
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .page-container {
+    padding: 25px 18px;
+  }
+
+  .registration-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-sidebar {
+    position: static;
+  }
+
+  .registration-card {
+    padding: 25px;
+  }
+
+  .registration-heading h1 {
+    font-size: 27px;
+  }
+
+  .event-summary-card {
+    align-items: flex-start;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .page-container {
+    padding: 15px;
+  }
+
+  .event-summary-card {
+    flex-direction: column;
+  }
+
+  .event-summary-card h2 {
+    font-size: 23px;
+  }
+
+  .event-meta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .registration-card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .success-card {
+    margin: 30px auto;
+    padding: 35px 22px;
+  }
+
+  .success-card h1 {
+    font-size: 28px;
+  }
+}

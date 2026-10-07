@@ -174,3 +174,42 @@ export function deleteEvent(id) {
 
   return updatedEvents;
 }
+
+// ===============================
+// GET EVENT BY ID
+// ===============================
+
+export function getEventById(id) {
+  const events = getEvents();
+
+  return events.find(
+    (event) => String(event.id) === String(id)
+  );
+}
+
+
+// ===============================
+// ADD ATTENDEE
+// ===============================
+
+export function addAttendee(eventId, attendee) {
+  const events = getEvents();
+
+  const event = events.find(
+    (event) => String(event.id) === String(eventId)
+  );
+
+  if (!event) {
+    return false;
+  }
+
+  if (!event.attendees) {
+    event.attendees = [];
+  }
+
+  event.attendees.push(attendee);
+
+  saveEvents(events);
+
+  return true;
+}
